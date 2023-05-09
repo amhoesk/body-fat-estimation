@@ -1,0 +1,47 @@
+# loading raw data
+``` {r}
+setwd("./")
+source("get_data.r")
+source("clean_data.r")
+source("prepare_data.r")
+
+print(data.frame(vars_indep, vars_indep_desc))
+print(data.frame(vars_dep, vars_dep_desc))
+```
+
+# exploring demographic dataframe
+The number of females are a little bit higher than males.
+Age distribution does not match the age distribution of USA population. Therefore, estimations based on this sample may predict outcome variables for young people better than old ones.
+``` {r}
+vars = c("RIAGENDR", "RIDAGEEX")
+df <- df_join[vars]
+
+summary(df)
+
+ggplot(data = df, aes(x = RIDAGEEX)) + geom_histogram() + xlab("Age (Month)") +
+  ylab("Count") + ggtitle("Histogram of age")
+```
+
+# exploring body measurements dataframe
+Some of the variables show strong linear correlations and should be avoided as independent variables in regression analysis.
+``` {r}
+vars <- c("BMXWT", "BMXHT", "BMXARMC", "BMXARML",
+    "BMXCALF", "BMXLEG", "BMXSUB", "BMXTHICR", "BMXTRI", "BMXWAIST")
+df <- df_join[vars]
+summary(df)
+
+vec_row_sample <- sample(seq_len(nrow(df)), size = 200)
+ggpairs(df[vec_row_sample, ])
+```
+
+# exploring DXA dataframe
+``` {r}
+vars <- c("DXXHEFAT", "DXDHETOT", "DXXLAFAT", "DXDLATOT", "DXDLLTOT", "DXXLLFAT",
+          "DXXRAFAT", "DXDRATOT", "DXXRLFAT", "DXDRLTOT", "DXXTRFAT", "DXDTRTOT", 
+          "DXDTOBMC", "DXDTOBMD", "DXDTOFAT")
+df <- df_join[vars]
+summary(df)
+
+vec_row_sample <- sample(seq_len(nrow(df)), size = 200)
+ggpairs(df[vec_row_sample, ])
+```
