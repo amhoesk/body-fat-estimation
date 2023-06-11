@@ -23,17 +23,12 @@ amhoesk
     - [Ridge regression](#ridge-regression-1)
     - [Lasso regression](#lasso-regression-1)
 - [References](#references)
-- [Tasks](#tasks)
 
 # Data Exploration
 
 ## List of independent and dependent variables
 
 Dependent variables only reported for the left side of body
-
-``` r
-knitr::kable(df_vars_indep, caption = "List of independent variables")
-```
 
 |          | description                     |
 |:---------|:--------------------------------|
@@ -51,10 +46,6 @@ knitr::kable(df_vars_indep, caption = "List of independent variables")
 | BMXSUB   | Subscapular Skinfold (mm)       |
 
 List of independent variables
-
-``` r
-knitr::kable(df_vars_dep, caption = "List of dependent variables")
-```
 
 |          | description                         |
 |:---------|:------------------------------------|
@@ -84,12 +75,6 @@ distribution does not match the age distribution of USA population.
 Therefore, estimations based on this sample may predict outcome
 variables for young people better than old ones.
 
-``` r
-vars = c("RIAGENDR", "RIDAGEEX")
-df <- df_join[vars]
-knitr::kable(describe(df), digits = 3, caption = "Summary of demographic variables")
-```
-
 |          | vars |     n |   mean |     sd | median | trimmed |    mad | min | max | range |  skew | kurtosis |    se |
 |:---------|-----:|------:|-------:|-------:|-------:|--------:|-------:|----:|----:|------:|------:|---------:|------:|
 | RIAGENDR |    1 | 20235 |  0.462 |  0.499 |      0 |   0.452 |  0.000 |   0 |   1 |     1 | 0.153 |   -1.977 | 0.004 |
@@ -97,27 +82,12 @@ knitr::kable(describe(df), digits = 3, caption = "Summary of demographic variabl
 
 Summary of demographic variables
 
-``` r
-ggplot(data = df, aes(x = RIDAGEEX)) + 
-  geom_histogram() + 
-  xlab("Age (Month)") +
-  ylab("Count") + 
-  ggtitle("Histogram of age")
-```
-
-![](C:\Users\amirh\DOCUME~1\Projects\People\FARSHI~2\BODYFA~1\README~2/figure-gfm/demographics-1.png)<!-- -->
+![](README_figs/README-demographics-1.png)<!-- -->
 
 ## Exploring body measurements
 
 Some of the variables show strong linear correlations and should be
 avoided as independent variables in regression analysis.
-
-``` r
-vars <- c("BMXWT", "BMXHT", "BMXARMC", "BMXARML", "BMXCALF", "BMXLEG", 
-          "BMXSUB", "BMXTHICR", "BMXTRI", "BMXWAIST")
-df <- df_join[vars]
-knitr::kable(describe(df), digits = 3, caption = "Summary of body measurement variables")
-```
 
 |          | vars |     n |    mean |     sd | median | trimmed |    mad |   min |   max | range |   skew | kurtosis |    se |
 |:---------|-----:|------:|--------:|-------:|-------:|--------:|-------:|------:|------:|------:|-------:|---------:|------:|
@@ -134,25 +104,11 @@ knitr::kable(describe(df), digits = 3, caption = "Summary of body measurement va
 
 Summary of body measurement variables
 
-``` r
-vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
-ggpairs(df[vec_row_sample, ], colour = "cyl",
-    upper = list(continuous = wrap("cor", size = 3)),
-    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
-    Progress = FALSE)
-```
-
-![](C:\Users\amirh\DOCUME~1\Projects\People\FARSHI~2\BODYFA~1\README~2/figure-gfm/body%20measurements-1.png)<!-- -->
+![](README_figs/README-body%20measurements-1.png)<!-- -->
 
 ## Exploring DXA - Body parts fat weight
 
 Data was only ploted for the left arm and leg
-
-``` r
-vars <- c("DXXHEFAT", "DXXLAFAT", "DXXLLFAT", "DXXTRFAT", "DXDTOFAT")
-df <- df_join[vars]
-knitr::kable(describe(df), digits = 3, caption = "Summary of body parts fat weights")
-```
 
 |          | vars |     n |   mean |    sd | median | trimmed |   mad |   min |    max |  range |  skew | kurtosis |    se |
 |:---------|-----:|------:|-------:|------:|-------:|--------:|------:|------:|-------:|-------:|------:|---------:|------:|
@@ -164,25 +120,11 @@ knitr::kable(describe(df), digits = 3, caption = "Summary of body parts fat weig
 
 Summary of body parts fat weights
 
-``` r
-vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
-ggpairs(df[vec_row_sample, ], colour = "cyl",
-    upper = list(continuous = wrap("cor", size = 3)),
-    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
-    Progress = FALSE)
-```
-
-![](C:\Users\amirh\DOCUME~1\Projects\People\FARSHI~2\BODYFA~1\README~2/figure-gfm/dxa%20body%20fat%7D-1.png)<!-- -->
+![](README_figs/README-dxa%20body%20fat%7D-1.png)<!-- -->
 
 ## Exploring DXA - Body parts total weight
 
 Data was only ploted for the left arm and leg
-
-``` r
-vars <- c("DXDHETOT", "DXDLATOT", "DXDLLTOT", "DXDTRTOT")
-df <- df_join[vars]
-knitr::kable(describe(df), digits = 3, caption = "Summary of body parts total weights")
-```
 
 |          | vars |     n |   mean |     sd | median | trimmed |    mad |   min |    max |  range |  skew | kurtosis |    se |
 |:---------|-----:|------:|-------:|-------:|-------:|--------:|-------:|------:|-------:|-------:|------:|---------:|------:|
@@ -193,28 +135,13 @@ knitr::kable(describe(df), digits = 3, caption = "Summary of body parts total we
 
 Summary of body parts total weights
 
-``` r
-vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
-ggpairs(df[vec_row_sample, ], colour = "cyl",
-    upper = list(continuous = wrap("cor", size = 3)),
-    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
-    Progress = FALSE)
-```
-
-![](C:\Users\amirh\DOCUME~1\Projects\People\FARSHI~2\BODYFA~1\README~2/figure-gfm/dxa%20body%20weight%7D-1.png)<!-- -->
+![](README_figs/README-dxa%20body%20weight%7D-1.png)<!-- -->
 
 # Building Regression Models
 
 ## Using all independent variables
 
 ### Stepwise regression models
-
-``` r
-df_coeffs <- fit_stepwise_reg_model(df_scaled, vars_indep = vars_indep, vars_dep = vars_dep)
-
-caption <- "Step-wise regression model based on all independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
 
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST | BMXARMC | BMXTHICR | BMXCALF | BMXARML | BMXLEG | BMXTRI | BMXSUB |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|--------:|---------:|--------:|--------:|-------:|-------:|-------:|------:|------:|
@@ -239,13 +166,6 @@ Step-wise regression model based on all independent variables
 
 ### Ridge regression
 
-``` r
-df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep, 
-                                      vars_dep = vars_dep, "lasso")
-caption <- "Ridge regression model based on all independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
-
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST | BMXARMC | BMXTHICR | BMXCALF | BMXARML | BMXLEG | BMXTRI | BMXSUB |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|--------:|---------:|--------:|--------:|-------:|-------:|-------:|------:|------:|
 | DXXHEFAT |       1.122 |  0.107 |  0.003 |   -0.076 |   -0.015 |    0.000 |   0.008 |    0.000 |   0.000 |   0.000 |  0.000 | -0.015 |  0.015 | 0.738 | 0.079 |
@@ -269,13 +189,6 @@ Ridge regression model based on all independent variables
 
 ### Lasso regression
 
-``` r
-df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep, 
-                                      vars_dep = vars_dep, type = "lasso")
-caption <- "Lasso regression model based on all independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
-
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST | BMXARMC | BMXTHICR | BMXCALF | BMXARML | BMXLEG | BMXTRI | BMXSUB |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|--------:|---------:|--------:|--------:|-------:|-------:|-------:|------:|------:|
 | DXXHEFAT |       1.122 |  0.107 |  0.003 |   -0.076 |   -0.015 |    0.000 |   0.008 |    0.000 |   0.000 |   0.000 |  0.000 | -0.015 |  0.015 | 0.738 | 0.079 |
@@ -292,7 +205,7 @@ knitr::kable(df_coeffs, caption = caption, digits = 3)
 | DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
 | DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
 | DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
-| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
+| DXDTRPF  |      25.553 | -2.586 | -1.825 |    3.628 |    0.301 |    6.925 |  -0.491 |    0.352 |  -0.299 |   0.197 | -0.281 |  2.808 |  1.500 | 0.863 | 3.286 |
 | DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Lasso regression model based on all independent variables
@@ -300,15 +213,6 @@ Lasso regression model based on all independent variables
 ## Using only five independent variables
 
 ### Stepwise regression models
-
-``` r
-vars_indep_sel <- c("BMXWT", "BMXHT", "RIAGENDR", "RIDAGEEX", "BMXWAIST")
-
-df_coeffs <- fit_stepwise_reg_model(df_scaled, vars_indep = vars_indep_sel, vars_dep = vars_dep)
-
-caption <- "Step-wise regression model based on only five easily-measurable independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
 
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
@@ -334,14 +238,6 @@ independent variables
 
 ### Ridge regression
 
-``` r
-df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
-                                      vars_dep = vars_dep, "lasso")
-
-caption <- "Ridge regression model based on only five easily-measurable independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
-
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
 | DXXHEFAT |       1.126 |  0.117 |  0.002 |   -0.084 |   -0.012 |    0.000 | 0.732 | 0.080 |
@@ -359,20 +255,12 @@ knitr::kable(df_coeffs, caption = caption, digits = 3)
 | DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
 | DXDLLPF  |      27.908 |  0.126 | -3.809 |   11.360 |   -1.237 |    5.030 | 0.639 | 5.674 |
 | DXDTRPF  |      23.995 | -0.504 | -3.775 |    7.001 |    0.013 |    8.637 | 0.799 | 3.982 |
-| DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
+| DXDTOPF  |      25.501 |  0.000 | -3.707 |    8.562 |   -0.501 |    6.493 | 0.750 | 4.074 |
 
 Ridge regression model based on only five easily-measurable independent
 variables
 
 ### Lasso regression
-
-``` r
-df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
-                                      vars_dep = vars_dep, type = "lasso")
-
-caption <- "Lasso regression model based on only five easily-measurable independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
-```
 
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
 |:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
@@ -389,9 +277,9 @@ knitr::kable(df_coeffs, caption = caption, digits = 3)
 | DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 | DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
 | DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
-| DXDLLPF  |      27.909 |  0.112 | -3.800 |   11.357 |   -1.234 |    5.035 | 0.639 | 5.674 |
+| DXDLLPF  |      27.908 |  0.126 | -3.809 |   11.360 |   -1.237 |    5.030 | 0.639 | 5.674 |
 | DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
-| DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
+| DXDTOPF  |      25.499 | -0.001 | -3.710 |    8.565 |   -0.505 |    6.501 | 0.750 | 4.074 |
 
 Lasso regression model based on only five easily-measurable independent
 variables
@@ -399,8 +287,3 @@ variables
 # References
 
 <https://www.datacamp.com/tutorial/tutorial-ridge-lasso-elastic-net>
-
-# Tasks
-
-ridge and lasso regression models Only sex, height, age and
-circumferences, RMSE

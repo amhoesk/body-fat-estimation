@@ -10,18 +10,21 @@ output:
     html_document:
         toc: true
         toc_float: false 
-        theme: united
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding,
-  output_dir = "./", output_format = "all") })
+  output_dir = ".//", output_format = "all") })
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-```{r, child = 'exploring_data.Rmd', cache = TRUE}
+```{r, echo = FALSE}
+knitr::opts_chunk$set(fig.path = "README_figs/README-")
 ```
 
-```{r, child = 'stepwise_regression.Rmd', cache = TRUE}
+```{r, child = 'exploring_data.Rmd'}
+```
+
+```{r, child = 'stepwise_regression.Rmd'}
 ```
