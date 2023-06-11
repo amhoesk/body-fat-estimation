@@ -1,4 +1,7 @@
 # Data Exploration
+Because missing or invalid data have been multiply imputed, the DXX_D data release file contains 5 records for each survey participant who was interviewed and examined. Only 1 record was used in calculating sample sizes. However, all 5 records was used in analyses in order to obtain more accurate variance estimates. The records for some survey participants, such as pregnant females, were blank as  pregnant females were not eligible for the DXA scan.
+DXA scans were administered to eligible survey participants aged 8-69.
+Only individuals were all of their data were valid and none were imputed, were selected.
 
 ```{r loading data exploring, include = FALSE}
 source("get_data.r")
@@ -25,7 +28,7 @@ knitr::kable(describe(df), digits = 3, caption = "Summary of demographic variabl
 
 ggplot(data = df, aes(x = RIDAGEEX)) + 
   geom_histogram() + 
-  xlab("Age (Month)") +
+  xlab(df_vars_indep["RIDAGEEX",]) +
   ylab("Count") + 
   ggtitle("Histogram of age")
 ```

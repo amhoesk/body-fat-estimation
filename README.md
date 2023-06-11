@@ -20,6 +20,16 @@ amhoesk
 
 # Data Exploration
 
+Because missing or invalid data have been multiply imputed, the DXX_D
+data release file contains 5 records for each survey participant who was
+interviewed and examined. Only 1 record was used in calculating sample
+sizes. However, all 5 records was used in analyses in order to obtain
+more accurate variance estimates. The records for some survey
+participants, such as pregnant females, were blank as pregnant females
+were not eligible for the DXA scan. DXA scans were administered to
+eligible survey participants aged 8-69. Only individuals were all of
+their data were valid and none were imputed, were selected.
+
 ## List of independent and dependent variables
 
 Dependent variables only reported for the left side of body
@@ -135,6 +145,8 @@ Summary of body parts total weights
 
 ## Using all independent variables
 
+All independent variables were normalized except binary sex variable
+
 ### Stepwise regression models
 
 |          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST | BMXARMC | BMXTHICR | BMXCALF | BMXARML | BMXLEG | BMXTRI | BMXSUB |    R2 |  RMSE |
@@ -175,8 +187,8 @@ Step-wise regression model based on all independent variables
 | DXDTOBMD |       1.077 |  0.004 |  0.072 |    0.039 |    0.020 |   -0.045 |   0.053 |    0.043 |   0.000 |   0.000 |  0.000 | -0.040 |  0.013 | 0.665 | 0.090 |
 | DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
 | DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
-| DXDLLPF  |      30.557 | -3.227 | -1.858 |    5.624 |    0.013 |    3.946 |  -2.611 |    1.900 |   0.509 |   0.172 |  0.140 |  5.457 | -0.621 | 0.778 | 4.451 |
-| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
+| DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
+| DXDTRPF  |      25.553 | -2.586 | -1.825 |    3.628 |    0.301 |    6.925 |  -0.491 |    0.352 |  -0.299 |   0.197 | -0.281 |  2.808 |  1.500 | 0.863 | 3.286 |
 | DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Ridge regression model based on all independent variables
@@ -198,8 +210,8 @@ Ridge regression model based on all independent variables
 | DXDTOBMD |       1.077 |  0.004 |  0.072 |    0.039 |    0.020 |   -0.045 |   0.053 |    0.043 |   0.000 |   0.000 |  0.000 | -0.040 |  0.013 | 0.665 | 0.090 |
 | DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
 | DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
-| DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
-| DXDTRPF  |      25.553 | -2.586 | -1.825 |    3.628 |    0.301 |    6.925 |  -0.491 |    0.352 |  -0.299 |   0.197 | -0.281 |  2.808 |  1.500 | 0.863 | 3.286 |
+| DXDLLPF  |      30.557 | -3.227 | -1.858 |    5.624 |    0.013 |    3.946 |  -2.611 |    1.900 |   0.509 |   0.172 |  0.140 |  5.457 | -0.621 | 0.778 | 4.451 |
+| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
 | DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Lasso regression model based on all independent variables
@@ -246,9 +258,9 @@ independent variables
 | DXDTOBMC |       2.161 |  0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
 | DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 | DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
-| DXDLAPF  |      24.765 | -0.819 | -4.486 |   11.946 |   -0.693 |    7.687 | 0.694 | 5.882 |
-| DXDLLPF  |      27.908 |  0.126 | -3.809 |   11.360 |   -1.237 |    5.030 | 0.639 | 5.674 |
-| DXDTRPF  |      23.995 | -0.504 | -3.775 |    7.001 |    0.013 |    8.637 | 0.799 | 3.982 |
+| DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
+| DXDLLPF  |      27.918 |  0.032 | -3.753 |   11.339 |   -1.218 |    5.060 | 0.639 | 5.674 |
+| DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
 | DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
 
 Ridge regression model based on only five easily-measurable independent
@@ -270,8 +282,8 @@ variables
 | DXDTOBMC |       2.161 |  0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
 | DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 | DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
-| DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
-| DXDLLPF  |      27.912 |  0.087 | -3.786 |   11.352 |   -1.230 |    5.044 | 0.639 | 5.674 |
+| DXDLAPF  |      24.765 | -0.819 | -4.486 |   11.946 |   -0.693 |    7.687 | 0.694 | 5.882 |
+| DXDLLPF  |      27.921 |  0.024 | -3.742 |   11.332 |   -1.208 |    5.052 | 0.639 | 5.674 |
 | DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
 | DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
 
