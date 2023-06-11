@@ -49,7 +49,7 @@ ggpairs(df[vec_row_sample, ], colour = "cyl",
 ## Exploring DXA - Body parts fat weight
 Data was only ploted for the left arm and leg
 
-```{r dxa body fat}, fig.height=5, fig.width=7}
+```{r dxa body fat, fig.height=5, fig.width=7}
 vars <- c("DXXHEFAT", "DXXLAFAT", "DXXLLFAT", "DXXTRFAT", "DXDTOFAT")
 df <- df_join[vars]
 knitr::kable(describe(df), digits = 3, caption = "Summary of body parts fat weights")
@@ -64,7 +64,7 @@ ggpairs(df[vec_row_sample, ], colour = "cyl",
 ## Exploring DXA - Body parts total weight
 Data was only ploted for the left arm and leg
 
-```{r dxa body weight}, fig.height=4, fig.width=6}
+```{r dxa body weight, fig.height=4, fig.width=6}
 vars <- c("DXDHETOT", "DXDLATOT", "DXDLLTOT", "DXDTRTOT")
 df <- df_join[vars]
 knitr::kable(describe(df), digits = 3, caption = "Summary of body parts total weights")
