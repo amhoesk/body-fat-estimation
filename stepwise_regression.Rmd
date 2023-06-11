@@ -8,7 +8,7 @@ source("define_models.r")
 ```
 
 ## Using all independent variables
-All independent variables were normalized except binary sex variable
+All independent variables were normalized (centered by subtracting the column means from their corresponding columns and divided by the centered columns by their standard deviations) except binary sex variable
 
 ### Stepwise regression models
 
@@ -63,12 +63,9 @@ knitr::kable(df_coeffs, caption = caption, digits = 3)
 ### Lasso regression
 
 ```{r lasso regression selected}
-df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
+df_coeffs_lasso <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
                                       vars_dep = vars_dep, type = "lasso")
 
 caption <- "Lasso regression model based on only five easily-measurable independent variables"
-knitr::kable(df_coeffs, caption = caption, digits = 3)
+knitr::kable(df_coeffs_lasso, caption = caption, digits = 3)
 ```
-
-# References
-https://www.datacamp.com/tutorial/tutorial-ridge-lasso-elastic-net

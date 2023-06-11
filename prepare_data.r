@@ -19,7 +19,7 @@ vars_indep <- c(
 vars_indep_desc <- c(
     "Weight (kg)"                    ,
     "Standing Height (cm)"           , 
-    "Gender (0 male, 1 female)"      ,
+    "Sex (0 male, 1 female)"      ,
     "Exam Age (year)"                , 
     "Waist Circumference (cm)"       ,
     "Arm Circumference (cm)"         ,

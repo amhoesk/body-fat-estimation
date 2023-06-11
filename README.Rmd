@@ -4,13 +4,16 @@ date: '`r format(Sys.Date())`'
 title: Body Fat Estimation
 subtitle: Building regression models (step-wise, ridge and lasso) using a dataset of ~4k individuals for estimating body fat and total mass by using generic body measurements i.e. weight, height and etc.
 output:
+    word_document:
+      toc: true
+      toc_depth: 3
     github_document:
         toc: true
         toc_depth: 2
         html_preview: false
     html_document:
         toc: true
-        toc_float: false 
+        toc_float: false
         theme: united
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding,
@@ -30,3 +33,9 @@ knitr::opts_chunk$set(fig.path = "README_figs/README-")
 
 ```{r, child = 'stepwise_regression.Rmd'}
 ```
+
+```{r, child = 'gen_formula.Rmd'}
+```
+
+# References
+https://www.datacamp.com/tutorial/tutorial-ridge-lasso-elastic-net

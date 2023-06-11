@@ -1,9 +1,7 @@
 # Data Exploration
-Because missing or invalid data have been multiply imputed, the DXX_D data release file contains 5 records for each survey participant who was interviewed and examined. Only 1 record was used in calculating sample sizes. However, all 5 records was used in analyses in order to obtain more accurate variance estimates. The records for some survey participants, such as pregnant females, were blank as  pregnant females were not eligible for the DXA scan.
-DXA scans were administered to eligible survey participants aged 8-69.
-Only individuals were all of their data were valid and none were imputed, were selected.
+As missing or invalid data have been multiply imputed, the DXX_D data release file contained 5 records for each survey participant. Only 1 record was recommended to be used in calculating sample sizes while all 5 records were recommended to be used in analyses in order to obtain more accurate variance estimates. The records for some survey participants, such as pregnant females, were blank as pregnant females were not eligible for the DXA scan. DXA scans were administered to eligible survey participants aged 8-69. Only individuals were all of their data were valid and none were imputed, were selected.
 
-```{r loading data exploring, include = FALSE}
+```{r loading data exploring}
 source("get_data.r")
 source("clean_data.r")
 source("prepare_data.r")
@@ -11,7 +9,7 @@ source("define_models.r")
 ```
 
 ## List of independent and dependent variables
-Dependent variables only reported for the left side of body
+Dependent variables only reported for the left side of body.
 
 ```{r}
 knitr::kable(df_vars_indep, caption = "List of independent variables")
@@ -34,7 +32,7 @@ ggplot(data = df, aes(x = RIDAGEEX)) +
 ```
 
 ## Exploring body measurements
-Some of the variables show strong linear correlations and should be avoided as independent variables in regression analysis.
+Some of the variables show strong linear correlations.
 
 ```{r body measurements, fig.height=9, fig.width=12}
 vars <- c("BMXWT", "BMXHT", "BMXARMC", "BMXARML", "BMXCALF", "BMXLEG", 

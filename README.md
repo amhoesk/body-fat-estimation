@@ -1,7 +1,7 @@
 Body Fat Estimation
 ================
 amhoesk
-2023-06-10
+2023-06-11
 
 - [Data Exploration](#data-exploration)
   - [List of independent and dependent
@@ -16,14 +16,15 @@ amhoesk
   - [Using all independent variables](#using-all-independent-variables)
   - [Using only five independent
     variables](#using-only-five-independent-variables)
+- [Simple formulas](#simple-formulas)
 - [References](#references)
 
 # Data Exploration
 
-Because missing or invalid data have been multiply imputed, the DXX_D
-data release file contains 5 records for each survey participant who was
-interviewed and examined. Only 1 record was used in calculating sample
-sizes. However, all 5 records was used in analyses in order to obtain
+As missing or invalid data have been multiply imputed, the DXX_D data
+release file contained 5 records for each survey participant. Only 1
+record was recommended to be used in calculating sample sizes while all
+5 records were recommended to be used in analyses in order to obtain
 more accurate variance estimates. The records for some survey
 participants, such as pregnant females, were blank as pregnant females
 were not eligible for the DXA scan. DXA scans were administered to
@@ -32,13 +33,13 @@ their data were valid and none were imputed, were selected.
 
 ## List of independent and dependent variables
 
-Dependent variables only reported for the left side of body
+Dependent variables only reported for the left side of body.
 
 |          | description                     |
 |:---------|:--------------------------------|
 | BMXWT    | Weight (kg)                     |
 | BMXHT    | Standing Height (cm)            |
-| RIAGENDR | Gender (0 male, 1 female)       |
+| RIAGENDR | Sex (0 male, 1 female)          |
 | RIDAGEEX | Exam Age (year)                 |
 | BMXWAIST | Waist Circumference (cm)        |
 | BMXARMC  | Arm Circumference (cm)          |
@@ -90,8 +91,7 @@ Summary of demographic variables
 
 ## Exploring body measurements
 
-Some of the variables show strong linear correlations and should be
-avoided as independent variables in regression analysis.
+Some of the variables show strong linear correlations.
 
 |          | vars |     n |    mean |     sd | median | trimmed |    mad |   min |   max | range |   skew | kurtosis |    se |
 |:---------|-----:|------:|--------:|-------:|-------:|--------:|-------:|------:|------:|------:|-------:|---------:|------:|
@@ -145,7 +145,10 @@ Summary of body parts total weights
 
 ## Using all independent variables
 
-All independent variables were normalized except binary sex variable
+All independent variables were normalized (centered by subtracting the
+column means from their corresponding columns and divided by the
+centered columns by their standard deviations) except binary sex
+variable
 
 ### Stepwise regression models
 
@@ -188,7 +191,7 @@ Step-wise regression model based on all independent variables
 | DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
 | DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
 | DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
-| DXDTRPF  |      25.553 | -2.586 | -1.825 |    3.628 |    0.301 |    6.925 |  -0.491 |    0.352 |  -0.299 |   0.197 | -0.281 |  2.808 |  1.500 | 0.863 | 3.286 |
+| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
 | DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Ridge regression model based on all independent variables
@@ -210,7 +213,7 @@ Ridge regression model based on all independent variables
 | DXDTOBMD |       1.077 |  0.004 |  0.072 |    0.039 |    0.020 |   -0.045 |   0.053 |    0.043 |   0.000 |   0.000 |  0.000 | -0.040 |  0.013 | 0.665 | 0.090 |
 | DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
 | DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
-| DXDLLPF  |      30.557 | -3.227 | -1.858 |    5.624 |    0.013 |    3.946 |  -2.611 |    1.900 |   0.509 |   0.172 |  0.140 |  5.457 | -0.621 | 0.778 | 4.451 |
+| DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
 | DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
 | DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
@@ -259,9 +262,9 @@ independent variables
 | DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 | DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
 | DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
-| DXDLLPF  |      27.918 |  0.032 | -3.753 |   11.339 |   -1.218 |    5.060 | 0.639 | 5.674 |
+| DXDLLPF  |      27.908 |  0.126 | -3.809 |   11.360 |   -1.237 |    5.030 | 0.639 | 5.674 |
 | DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
-| DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
+| DXDTOPF  |      25.496 | -0.079 | -3.686 |    8.572 |   -0.521 |    6.573 | 0.750 | 4.074 |
 
 Ridge regression model based on only five easily-measurable independent
 variables
@@ -282,13 +285,68 @@ variables
 | DXDTOBMC |       2.161 |  0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
 | DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 | DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
-| DXDLAPF  |      24.765 | -0.819 | -4.486 |   11.946 |   -0.693 |    7.687 | 0.694 | 5.882 |
-| DXDLLPF  |      27.921 |  0.024 | -3.742 |   11.332 |   -1.208 |    5.052 | 0.639 | 5.674 |
+| DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
+| DXDLLPF  |      27.914 |  0.061 | -3.772 |   11.347 |   -1.225 |    5.054 | 0.639 | 5.674 |
 | DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
-| DXDTOPF  |      25.500 |  0.000 | -3.709 |    8.564 |   -0.503 |    6.497 | 0.750 | 4.074 |
+| DXDTOPF  |      25.497 | -0.063 | -3.691 |    8.571 |   -0.518 |    6.559 | 0.750 | 4.074 |
 
 Lasso regression model based on only five easily-measurable independent
 variables
+
+# Simple formulas
+
+The following formulas were generated based on lasso regression analysis
+and can be used to provide rougher estimation of body parts fat and
+total mass as well as percentage of mass. Independent variables should
+be used in original, non-normalized, form.
+
+DXXHEFAT = (0.117) × BMXWT + (0.002) × BMXHT + (-0.084) × RIAGENDR +
+(-0.012) × RIDAGEEX + (0.000)
+
+DXXLAFAT = (0.395) × BMXWT + (-0.211) × BMXHT + (0.344) × RIAGENDR +
+(-0.012) × RIDAGEEX + (0.231) × BMXWAIST + (0.231)
+
+DXXLLFAT = (1.520) × BMXWT + (-0.498) × BMXHT + (1.521) × RIAGENDR +
+(-0.284) × RIDAGEEX + (0.196) × BMXWAIST + (0.196)
+
+DXXTRFAT = (2.372) × BMXWT + (-1.568) × BMXHT + (2.016) × RIAGENDR +
+(0.272) × RIDAGEEX + (3.207) × BMXWAIST + (3.207)
+
+DXDTOFAT = (6.420) × BMXWT + (-3.017) × BMXHT + (5.703) × RIAGENDR +
+(-0.337) × RIDAGEEX + (4.028) × BMXWAIST + (4.028)
+
+DXDHETOT = (0.523) × BMXWT + (0.055) × BMXHT + (-0.297) × RIAGENDR +
+(-0.023) × RIDAGEEX + (-0.096) × BMXWAIST + (-0.096)
+
+DXDLATOT = (1.339) × BMXWT + (-0.041) × BMXHT + (-0.380) × RIAGENDR +
+(0.043) × RIDAGEEX + (-0.151) × BMXWAIST + (-0.151)
+
+DXDLLTOT = (4.168) × BMXWT + (0.005) × BMXHT + (0.599) × RIAGENDR +
+(-0.440) × RIDAGEEX + (-0.931) × BMXWAIST + (-0.931)
+
+DXDTRTOT = (7.718) × BMXWT + (0.092) × BMXHT + (-0.148) × RIAGENDR +
+(0.823) × RIDAGEEX + (2.325) × BMXWAIST + (2.325)
+
+DXDTOBMC = (0.542) × BMXWT + (0.263) × BMXHT + (-0.036) × RIAGENDR +
+(0.058) × RIDAGEEX + (-0.306) × BMXWAIST + (-0.306)
+
+DXDTOBMD = (0.117) × BMXWT + (0.060) × BMXHT + (0.015) × RIAGENDR +
+(0.019) × RIDAGEEX + (-0.072) × BMXWAIST + (-0.072)
+
+DXDHEPF = (-0.188) × BMXWT + (-0.220) × BMXHT + (-0.320) × RIAGENDR +
+(-0.187) × RIDAGEEX + (0.522) × BMXWAIST + (0.522)
+
+DXDLAPF = (-0.848) × BMXWT + (-4.477) × BMXHT + (11.947) × RIAGENDR +
+(-0.698) × RIDAGEEX + (7.712) × BMXWAIST + (7.712)
+
+DXDLLPF = (0.061) × BMXWT + (-3.772) × BMXHT + (11.347) × RIAGENDR +
+(-1.225) × RIDAGEEX + (5.054) × BMXWAIST + (5.054)
+
+DXDTRPF = (-0.529) × BMXWT + (-3.768) × BMXHT + (7.002) × RIAGENDR +
+(0.013) × RIDAGEEX + (8.657) × BMXWAIST + (8.657)
+
+DXDTOPF = (-0.063) × BMXWT + (-3.691) × BMXHT + (8.571) × RIAGENDR +
+(-0.518) × RIDAGEEX + (6.559) × BMXWAIST + (6.559)
 
 # References
 
