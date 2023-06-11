@@ -1,0 +1,27 @@
+---
+author: amhoesk
+date: '`r format(Sys.Date())`'
+title: Body Fat Estimation
+subtitle: a step-wise regression model using the a dataset of ~5k individuals for estimating body fat and lean mass by the generic body measurements i.e. weight, height and etc.
+output:
+    github_document:
+        toc: true
+        html_preview: false
+    html_document:
+        toc: true
+        toc_float: false 
+        theme: united
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding,
+  output_dir = "./", output_format = "all") })
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r, child = 'exploring_data.Rmd', cache = TRUE}
+```
+
+```{r, child = 'stepwise_regression.Rmd', cache = TRUE}
+```
