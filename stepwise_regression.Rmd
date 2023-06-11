@@ -71,6 +71,3 @@ knitr::kable(df_coeffs, caption = caption, digits = 3)
 
 # References
 https://www.datacamp.com/tutorial/tutorial-ridge-lasso-elastic-net
-
-# Tasks
-ridge and lasso regression models Only sex, height, age and circumferences, RMSE
