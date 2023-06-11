@@ -1,14 +1,13 @@
 # loading libraries
-library("stringr")
-library("tidyr")
-library("dplyr")
+library("tidyverse")
 library("haven")
 library("leaps")
 library("xlsx")
-library("MASS") # for stepwise regression
-library("glmnet") # for lasso regression
-library("ggplot2")
+library("MASS") # for step-wise regression
+library("glmnet") # for lasso, ridge and elastic net regression
 library("GGally")
+library("psych")
+
 # How to use leaps and MASS packages:
 # http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/154-stepwise-regression-essentials-in-r/     # nolint
 

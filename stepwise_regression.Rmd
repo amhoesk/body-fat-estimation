@@ -1,0 +1,76 @@
+# Building Regression Models
+
+```{r loading data building model, include = FALSE, eval=FALSE}
+source("get_data.r")
+source("clean_data.r")
+source("prepare_data.r")
+source("define_models.r")
+```
+
+## Using all independent variables
+
+### Stepwise regression models
+
+```{r stepwise regression full}
+df_coeffs <- fit_stepwise_reg_model(df_scaled, vars_indep = vars_indep, vars_dep = vars_dep)
+
+caption <- "Step-wise regression model based on all independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+### Ridge regression
+
+```{r ridge regression full}
+df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep, 
+                                      vars_dep = vars_dep, "lasso")
+caption <- "Ridge regression model based on all independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+### Lasso regression
+
+```{r lasso regression full}
+df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep, 
+                                      vars_dep = vars_dep, type = "lasso")
+caption <- "Lasso regression model based on all independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+## Using only five independent variables
+
+### Stepwise regression models
+
+```{r stepwise regression selected}
+vars_indep_sel <- c("BMXWT", "BMXHT", "RIAGENDR", "RIDAGEEX", "BMXWAIST")
+
+df_coeffs <- fit_stepwise_reg_model(df_scaled, vars_indep = vars_indep_sel, vars_dep = vars_dep)
+
+caption <- "Step-wise regression model based on only five easily-measurable independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+### Ridge regression
+
+```{r ridge regression selected}
+df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
+                                      vars_dep = vars_dep, "lasso")
+
+caption <- "Ridge regression model based on only five easily-measurable independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+### Lasso regression
+
+```{r lasso regression selected}
+df_coeffs <- fit_elasticnet_reg_model(df_scaled, vars_indep = vars_indep_sel, 
+                                      vars_dep = vars_dep, type = "lasso")
+
+caption <- "Lasso regression model based on only five easily-measurable independent variables"
+knitr::kable(df_coeffs, caption = caption, digits = 3)
+```
+
+# References
+https://www.datacamp.com/tutorial/tutorial-ridge-lasso-elastic-net
+
+# Tasks
+ridge and lasso regression models Only sex, height, age and circumferences, RMSE

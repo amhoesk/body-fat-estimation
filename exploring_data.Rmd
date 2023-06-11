@@ -1,47 +1,77 @@
-# loading raw data
-``` {r}
-setwd("./")
+# Data Exploration
+
+```{r loading data exploring, include = FALSE}
 source("get_data.r")
 source("clean_data.r")
 source("prepare_data.r")
-
-print(data.frame(vars_indep, vars_indep_desc))
-print(data.frame(vars_dep, vars_dep_desc))
+source("define_models.r")
 ```
 
-# exploring demographic dataframe
-The number of females are a little bit higher than males.
-Age distribution does not match the age distribution of USA population. Therefore, estimations based on this sample may predict outcome variables for young people better than old ones.
-``` {r}
+## List of independent and dependent variables
+Dependent variables only reported for the left side of body
+
+```{r}
+knitr::kable(df_vars_indep, caption = "List of independent variables")
+knitr::kable(df_vars_dep, caption = "List of dependent variables")
+```
+
+## Exploring demographics
+The number of females are a little bit higher than males. Age distribution does not match the age distribution of USA population. Therefore, estimations based on this sample may predict outcome variables for young people better than old ones.
+
+```{r demographics, fig.height=3, fig.width=6}
 vars = c("RIAGENDR", "RIDAGEEX")
 df <- df_join[vars]
+knitr::kable(describe(df), digits = 3, caption = "Summary of demographic variables")
 
-summary(df)
-
-ggplot(data = df, aes(x = RIDAGEEX)) + geom_histogram() + xlab("Age (Month)") +
-  ylab("Count") + ggtitle("Histogram of age")
+ggplot(data = df, aes(x = RIDAGEEX)) + 
+  geom_histogram() + 
+  xlab("Age (Month)") +
+  ylab("Count") + 
+  ggtitle("Histogram of age")
 ```
 
-# exploring body measurements dataframe
+## Exploring body measurements
 Some of the variables show strong linear correlations and should be avoided as independent variables in regression analysis.
-``` {r}
-vars <- c("BMXWT", "BMXHT", "BMXARMC", "BMXARML",
-    "BMXCALF", "BMXLEG", "BMXSUB", "BMXTHICR", "BMXTRI", "BMXWAIST")
-df <- df_join[vars]
-summary(df)
 
-vec_row_sample <- sample(seq_len(nrow(df)), size = 200)
-ggpairs(df[vec_row_sample, ])
+```{r body measurements, fig.height=9, fig.width=12}
+vars <- c("BMXWT", "BMXHT", "BMXARMC", "BMXARML", "BMXCALF", "BMXLEG", 
+          "BMXSUB", "BMXTHICR", "BMXTRI", "BMXWAIST")
+df <- df_join[vars]
+knitr::kable(describe(df), digits = 3, caption = "Summary of body measurement variables")
+
+vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
+ggpairs(df[vec_row_sample, ], colour = "cyl",
+    upper = list(continuous = wrap("cor", size = 3)),
+    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
+    Progress = FALSE)
 ```
 
-# exploring DXA dataframe
-``` {r}
-vars <- c("DXXHEFAT", "DXDHETOT", "DXXLAFAT", "DXDLATOT", "DXDLLTOT", "DXXLLFAT",
-          "DXXRAFAT", "DXDRATOT", "DXXRLFAT", "DXDRLTOT", "DXXTRFAT", "DXDTRTOT", 
-          "DXDTOBMC", "DXDTOBMD", "DXDTOFAT")
-df <- df_join[vars]
-summary(df)
+## Exploring DXA - Body parts fat weight
+Data was only ploted for the left arm and leg
 
-vec_row_sample <- sample(seq_len(nrow(df)), size = 200)
-ggpairs(df[vec_row_sample, ])
+```{r dxa body fat}, fig.height=5, fig.width=7}
+vars <- c("DXXHEFAT", "DXXLAFAT", "DXXLLFAT", "DXXTRFAT", "DXDTOFAT")
+df <- df_join[vars]
+knitr::kable(describe(df), digits = 3, caption = "Summary of body parts fat weights")
+
+vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
+ggpairs(df[vec_row_sample, ], colour = "cyl",
+    upper = list(continuous = wrap("cor", size = 3)),
+    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
+    Progress = FALSE)
+```
+
+## Exploring DXA - Body parts total weight
+Data was only ploted for the left arm and leg
+
+```{r dxa body weight}, fig.height=4, fig.width=6}
+vars <- c("DXDHETOT", "DXDLATOT", "DXDLLTOT", "DXDTRTOT")
+df <- df_join[vars]
+knitr::kable(describe(df), digits = 3, caption = "Summary of body parts total weights")
+
+vec_row_sample <- sample(seq_len(nrow(df)), size = 1000)
+ggpairs(df[vec_row_sample, ], colour = "cyl",
+    upper = list(continuous = wrap("cor", size = 3)),
+    lower = list(continuous = wrap("points", alpha = 0.3, size=0.2)),
+    Progress = FALSE)
 ```
