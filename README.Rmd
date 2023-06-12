@@ -2,11 +2,10 @@
 author: amhoesk
 date: '`r format(Sys.Date())`'
 title: Body Fat Estimation
-subtitle: Building regression models (step-wise, ridge and lasso) using a dataset of ~4k individuals for estimating body fat and total mass by using generic body measurements i.e. weight, height and etc.
 output:
-    word_document:
-      toc: true
-      toc_depth: 3
+    # word_document:
+      # toc: true
+      # toc_depth: 3
     github_document:
         toc: true
         toc_depth: 2
@@ -19,6 +18,12 @@ knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding,
   output_dir = ".//", output_format = "all") })
 ---
+
+This project uses the NAHES dataset, comprising of approximately 4000 individuals' body measurements (such as weight, height and waist circumference) as well as body composition (gathered through DEXA scans - the gold standard). We have developed step-wise, ridge, and LASSO regression models to estimate body fat and total mass at different body segments (e.g., trunk, legs), further simplifying these regression equations for ease of interpretation and application. These predictive tools can have applications in health and fitness, as well as biomechanical studies.
+
+```{r introduction, echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("./README_figs/schematic.png")
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)

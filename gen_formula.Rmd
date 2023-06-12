@@ -1,5 +1,5 @@
 # Simple formulas
-The following formulas were generated based on lasso regression analysis and can be used to provide rougher estimation of body parts fat and total mass as well as percentage of mass. Independent variables should be used in original, non-normalized, form.
+The following formulas were generated based on lasso regression analysis and can be used to provide rougher estimation of body parts fat and total mass. Independent variables should be used in original, non-normalized, form.
 
 ```{r, results='asis'}
 df_vars_scale_summary <- describe(df_join[,vars_scale])
@@ -23,12 +23,12 @@ for (var_dep in rownames(df_coeffs_lasso)) {
        
        c <- round(c, digits = 3)
        
-       f <- str_interp("${f}($[.3f]{c}) × ${var_indep} + ")
+       f <- str_interp("${f}($[.3f]{coef_new}) × ${var_indep} + ")
    }
    
    intercept <- intercept + df_coeffs_lasso[var_dep,"(Intercept)"]
    intercept <- round(intercept, digits = 3)
-   f <- str_interp("${f}($[.3f]{c})\n")
+   f <- str_interp("${f}($[.3f]{intercept})\n")
    
    writeLines(f)
 }

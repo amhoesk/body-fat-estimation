@@ -42,12 +42,7 @@ vars_dep <- c(
     "DXDLLTOT",
     "DXDTRTOT",
     "DXDTOBMC",
-    "DXDTOBMD",
-    "DXDHEPF" ,
-    "DXDLAPF" ,
-    "DXDLLPF" ,
-    "DXDTRPF" ,
-    "DXDTOPF"  
+    "DXDTOBMD"
 )
 
 vars_dep_desc <- c(
@@ -61,12 +56,7 @@ vars_dep_desc <- c(
     "Left Leg Total (kg)",
     "Trunk Total (kg)",
     "Total Bone Mineral Content (kg)",
-    "Total Bone Mineral Density (g/cm^2)",
-    "Head Percent Fat",
-    "Left Arm Percent Fat",
-    "Left Leg Percent Fat",
-    "Trunk Percent Fat",
-    "Total Percent Fat"    
+    "Total Bone Mineral Density (g/cm^2)"
 )
 
 df_vars_indep <- data.frame(description = vars_indep_desc, row.names = vars_indep)

@@ -1,7 +1,7 @@
 Body Fat Estimation
 ================
 amhoesk
-2023-06-11
+2023-06-12
 
 - [Data Exploration](#data-exploration)
   - [List of independent and dependent
@@ -18,6 +18,18 @@ amhoesk
     variables](#using-only-five-independent-variables)
 - [Simple formulas](#simple-formulas)
 - [References](#references)
+
+This project uses the NAHES dataset, comprising of approximately 4000
+individuals’ body measurements (such as weight, height and waist
+circumference) as well as body composition (gathered through DEXA
+scans - the gold standard). We have developed step-wise, ridge, and
+LASSO regression models to estimate body fat and total mass at different
+body segments (e.g., trunk, legs), further simplifying these regression
+equations for ease of interpretation and application. These predictive
+tools can have applications in health and fitness, as well as
+biomechanical studies.
+
+<img src="./README_figs/schematic.png" width="100%" />
 
 # Data Exploration
 
@@ -65,11 +77,6 @@ List of independent variables
 | DXDTRTOT | Trunk Total (kg)                    |
 | DXDTOBMC | Total Bone Mineral Content (kg)     |
 | DXDTOBMD | Total Bone Mineral Density (g/cm^2) |
-| DXDHEPF  | Head Percent Fat                    |
-| DXDLAPF  | Left Arm Percent Fat                |
-| DXDLLPF  | Left Leg Percent Fat                |
-| DXDTRPF  | Trunk Percent Fat                   |
-| DXDTOPF  | Total Percent Fat                   |
 
 List of dependent variables
 
@@ -165,11 +172,6 @@ variable
 | DXDTRTOT |      30.407 | 10.649 |  0.303 |    0.650 |    0.416 |    1.772 |   0.174 |   -1.085 |  -0.877 |  -0.458 | -0.441 | -0.379 |  0.123 | 0.987 | 1.217 |
 | DXDTOBMC |       2.109 |  0.416 |  0.253 |    0.076 |    0.051 |   -0.263 |   0.122 |    0.076 |  -0.040 |      NA |     NA | -0.129 |  0.021 | 0.856 | 0.235 |
 | DXDTOBMD |       1.073 |  0.030 |  0.069 |    0.047 |    0.022 |   -0.066 |   0.055 |    0.046 |  -0.010 |      NA | -0.002 | -0.044 |  0.018 | 0.667 | 0.090 |
-| DXDHEPF  |      23.912 |  0.130 | -0.301 |   -0.339 |   -0.210 |    0.459 |  -0.096 |   -0.207 |   0.029 |      NA |  0.047 |  0.054 |  0.012 | 0.408 | 0.422 |
-| DXDLAPF  |      27.714 | -5.581 | -1.331 |    5.559 |    0.221 |    5.697 |  -0.765 |    0.629 |   0.793 |      NA | -0.169 |  6.039 |  0.344 | 0.834 | 4.336 |
-| DXDLLPF  |      30.551 | -3.226 | -1.893 |    5.636 |       NA |    3.958 |  -2.603 |    1.869 |   0.528 |   0.191 |  0.158 |  5.455 | -0.623 | 0.778 | 4.451 |
-| DXDTRPF  |      25.555 | -2.639 | -1.840 |    3.623 |    0.305 |    6.948 |  -0.509 |    0.380 |  -0.299 |   0.230 | -0.281 |  2.803 |  1.509 | 0.863 | 3.286 |
-| DXDTOPF  |      27.503 | -2.616 | -1.895 |    4.226 |    0.171 |    5.196 |  -1.436 |    0.811 |   0.243 |   0.196 |     NA |  3.941 |  0.506 | 0.857 | 3.087 |
 
 Step-wise regression model based on all independent variables
 
@@ -188,11 +190,6 @@ Step-wise regression model based on all independent variables
 | DXDTRTOT |      30.412 | 10.658 |  0.305 |    0.641 |    0.420 |    1.769 |   0.161 |   -1.072 |  -0.880 |  -0.457 | -0.447 | -0.373 |  0.116 | 0.987 | 1.217 |
 | DXDTOBMC |       2.113 |  0.386 |  0.257 |    0.067 |    0.049 |   -0.242 |   0.119 |    0.069 |  -0.022 |   0.001 |  0.000 | -0.125 |  0.016 | 0.856 | 0.236 |
 | DXDTOBMD |       1.077 |  0.004 |  0.072 |    0.039 |    0.020 |   -0.045 |   0.053 |    0.043 |   0.000 |   0.000 |  0.000 | -0.040 |  0.013 | 0.665 | 0.090 |
-| DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
-| DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
-| DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
-| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
-| DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Ridge regression model based on all independent variables
 
@@ -211,11 +208,6 @@ Ridge regression model based on all independent variables
 | DXDTRTOT |      30.412 | 10.658 |  0.305 |    0.641 |    0.420 |    1.769 |   0.161 |   -1.072 |  -0.880 |  -0.457 | -0.447 | -0.373 |  0.116 | 0.987 | 1.217 |
 | DXDTOBMC |       2.113 |  0.386 |  0.257 |    0.067 |    0.049 |   -0.242 |   0.119 |    0.069 |  -0.022 |   0.001 |  0.000 | -0.125 |  0.016 | 0.856 | 0.236 |
 | DXDTOBMD |       1.077 |  0.004 |  0.072 |    0.039 |    0.020 |   -0.045 |   0.053 |    0.043 |   0.000 |   0.000 |  0.000 | -0.040 |  0.013 | 0.665 | 0.090 |
-| DXDHEPF  |      23.910 |  0.081 | -0.276 |   -0.335 |   -0.208 |    0.468 |  -0.077 |   -0.180 |   0.017 |   0.000 |  0.034 |  0.050 |  0.011 | 0.407 | 0.422 |
-| DXDLAPF  |      27.710 | -5.516 | -1.256 |    5.569 |    0.222 |    5.686 |  -0.732 |    0.612 |   0.769 |  -0.129 | -0.156 |  6.043 |  0.332 | 0.834 | 4.335 |
-| DXDLLPF  |      30.557 | -3.234 | -1.859 |    5.624 |    0.013 |    3.950 |  -2.613 |    1.902 |   0.510 |   0.174 |  0.140 |  5.457 | -0.622 | 0.778 | 4.451 |
-| DXDTRPF  |      25.554 | -2.600 | -1.823 |    3.627 |    0.302 |    6.932 |  -0.495 |    0.362 |  -0.302 |   0.202 | -0.284 |  2.807 |  1.501 | 0.863 | 3.286 |
-| DXDTOPF  |      27.503 | -2.563 | -1.853 |    4.226 |    0.165 |    5.169 |  -1.430 |    0.820 |   0.216 |   0.183 | -0.044 |  3.948 |  0.497 | 0.857 | 3.087 |
 
 Lasso regression model based on all independent variables
 
@@ -223,72 +215,57 @@ Lasso regression model based on all independent variables
 
 ### Stepwise regression models
 
-|          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
-|:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
-| DXXHEFAT |       1.126 |  0.118 |  0.002 |   -0.085 |   -0.014 |       NA | 0.732 | 0.080 |
-| DXXLAFAT |       0.948 |  0.406 | -0.216 |    0.346 |   -0.013 |    0.227 | 0.823 | 0.230 |
-| DXXLLFAT |       2.985 |  1.534 | -0.505 |    1.523 |   -0.285 |    0.189 | 0.717 | 0.841 |
-| DXXTRFAT |       7.855 |  2.366 | -1.568 |    2.017 |    0.272 |    3.214 | 0.912 | 1.470 |
-| DXDTOFAT |      16.895 |  6.400 | -3.011 |    5.704 |   -0.342 |    4.047 | 0.892 | 2.893 |
-| DXDHETOT |       4.712 |  0.544 |  0.049 |   -0.297 |   -0.022 |   -0.112 | 0.727 | 0.329 |
-| DXDLATOT |       3.865 |  1.376 | -0.057 |   -0.382 |    0.048 |   -0.179 | 0.951 | 0.284 |
-| DXDLLTOT |      10.815 |  4.193 |     NA |    0.604 |   -0.439 |   -0.951 | 0.942 | 0.769 |
-| DXDTRTOT |      30.777 |  7.681 |  0.105 |   -0.151 |    0.820 |    2.354 | 0.981 | 1.467 |
-| DXDTOBMC |       2.161 |  0.560 |  0.257 |   -0.037 |    0.061 |   -0.323 | 0.839 | 0.249 |
-| DXDTOBMD |       1.086 |  0.137 |  0.054 |    0.019 |    0.023 |   -0.090 | 0.629 | 0.095 |
-| DXDHEPF  |      23.904 | -0.211 | -0.214 |   -0.323 |   -0.191 |    0.542 | 0.387 | 0.429 |
-| DXDLAPF  |      24.764 | -0.903 | -4.458 |   11.947 |   -0.706 |    7.757 | 0.694 | 5.882 |
-| DXDLLPF  |      27.909 |     NA | -3.760 |   11.358 |   -1.246 |    5.123 | 0.639 | 5.674 |
-| DXDTRPF  |      23.994 | -0.583 | -3.749 |    7.003 |       NA |    8.703 | 0.799 | 3.981 |
-| DXDTOPF  |      25.494 |     NA | -3.720 |    8.576 |   -0.519 |    6.520 | 0.750 | 4.074 |
+|          | (Intercept) | BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
+|:---------|------------:|------:|-------:|---------:|---------:|---------:|------:|------:|
+| DXXHEFAT |       1.126 | 0.118 |  0.002 |   -0.085 |   -0.014 |       NA | 0.732 | 0.080 |
+| DXXLAFAT |       0.948 | 0.406 | -0.216 |    0.346 |   -0.013 |    0.227 | 0.823 | 0.230 |
+| DXXLLFAT |       2.985 | 1.534 | -0.505 |    1.523 |   -0.285 |    0.189 | 0.717 | 0.841 |
+| DXXTRFAT |       7.855 | 2.366 | -1.568 |    2.017 |    0.272 |    3.214 | 0.912 | 1.470 |
+| DXDTOFAT |      16.895 | 6.400 | -3.011 |    5.704 |   -0.342 |    4.047 | 0.892 | 2.893 |
+| DXDHETOT |       4.712 | 0.544 |  0.049 |   -0.297 |   -0.022 |   -0.112 | 0.727 | 0.329 |
+| DXDLATOT |       3.865 | 1.376 | -0.057 |   -0.382 |    0.048 |   -0.179 | 0.951 | 0.284 |
+| DXDLLTOT |      10.815 | 4.193 |     NA |    0.604 |   -0.439 |   -0.951 | 0.942 | 0.769 |
+| DXDTRTOT |      30.777 | 7.681 |  0.105 |   -0.151 |    0.820 |    2.354 | 0.981 | 1.467 |
+| DXDTOBMC |       2.161 | 0.560 |  0.257 |   -0.037 |    0.061 |   -0.323 | 0.839 | 0.249 |
+| DXDTOBMD |       1.086 | 0.137 |  0.054 |    0.019 |    0.023 |   -0.090 | 0.629 | 0.095 |
 
 Step-wise regression model based on only five easily-measurable
 independent variables
 
 ### Ridge regression
 
-|          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
-|:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
-| DXXHEFAT |       1.126 |  0.117 |  0.002 |   -0.084 |   -0.012 |    0.000 | 0.732 | 0.080 |
-| DXXLAFAT |       0.949 |  0.395 | -0.211 |    0.344 |   -0.012 |    0.231 | 0.823 | 0.230 |
-| DXXLLFAT |       2.986 |  1.520 | -0.498 |    1.521 |   -0.284 |    0.196 | 0.717 | 0.841 |
-| DXXTRFAT |       7.855 |  2.372 | -1.568 |    2.016 |    0.272 |    3.207 | 0.912 | 1.470 |
-| DXDTOFAT |      16.896 |  6.420 | -3.017 |    5.703 |   -0.337 |    4.028 | 0.892 | 2.893 |
-| DXDHETOT |       4.712 |  0.523 |  0.055 |   -0.297 |   -0.023 |   -0.096 | 0.727 | 0.329 |
-| DXDLATOT |       3.864 |  1.339 | -0.041 |   -0.380 |    0.043 |   -0.151 | 0.951 | 0.285 |
-| DXDLLTOT |      10.817 |  4.168 |  0.005 |    0.599 |   -0.440 |   -0.931 | 0.942 | 0.769 |
-| DXDTRTOT |      30.776 |  7.718 |  0.092 |   -0.148 |    0.823 |    2.325 | 0.981 | 1.467 |
-| DXDTOBMC |       2.161 |  0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
-| DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
-| DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
-| DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
-| DXDLLPF  |      27.908 |  0.126 | -3.809 |   11.360 |   -1.237 |    5.030 | 0.639 | 5.674 |
-| DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
-| DXDTOPF  |      25.496 | -0.079 | -3.686 |    8.572 |   -0.521 |    6.573 | 0.750 | 4.074 |
+|          | (Intercept) | BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
+|:---------|------------:|------:|-------:|---------:|---------:|---------:|------:|------:|
+| DXXHEFAT |       1.126 | 0.117 |  0.002 |   -0.084 |   -0.012 |    0.000 | 0.732 | 0.080 |
+| DXXLAFAT |       0.949 | 0.395 | -0.211 |    0.344 |   -0.012 |    0.231 | 0.823 | 0.230 |
+| DXXLLFAT |       2.986 | 1.520 | -0.498 |    1.521 |   -0.284 |    0.196 | 0.717 | 0.841 |
+| DXXTRFAT |       7.855 | 2.372 | -1.568 |    2.016 |    0.272 |    3.207 | 0.912 | 1.470 |
+| DXDTOFAT |      16.896 | 6.420 | -3.017 |    5.703 |   -0.337 |    4.028 | 0.892 | 2.893 |
+| DXDHETOT |       4.712 | 0.523 |  0.055 |   -0.297 |   -0.023 |   -0.096 | 0.727 | 0.329 |
+| DXDLATOT |       3.864 | 1.339 | -0.041 |   -0.380 |    0.043 |   -0.151 | 0.951 | 0.285 |
+| DXDLLTOT |      10.817 | 4.168 |  0.005 |    0.599 |   -0.440 |   -0.931 | 0.942 | 0.769 |
+| DXDTRTOT |      30.776 | 7.718 |  0.092 |   -0.148 |    0.823 |    2.325 | 0.981 | 1.467 |
+| DXDTOBMC |       2.161 | 0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
+| DXDTOBMD |       1.088 | 0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 
 Ridge regression model based on only five easily-measurable independent
 variables
 
 ### Lasso regression
 
-|          | (Intercept) |  BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
-|:---------|------------:|-------:|-------:|---------:|---------:|---------:|------:|------:|
-| DXXHEFAT |       1.126 |  0.117 |  0.002 |   -0.084 |   -0.012 |    0.000 | 0.732 | 0.080 |
-| DXXLAFAT |       0.949 |  0.395 | -0.211 |    0.344 |   -0.012 |    0.231 | 0.823 | 0.230 |
-| DXXLLFAT |       2.986 |  1.520 | -0.498 |    1.521 |   -0.284 |    0.196 | 0.717 | 0.841 |
-| DXXTRFAT |       7.855 |  2.372 | -1.568 |    2.016 |    0.272 |    3.207 | 0.912 | 1.470 |
-| DXDTOFAT |      16.896 |  6.420 | -3.017 |    5.703 |   -0.337 |    4.028 | 0.892 | 2.893 |
-| DXDHETOT |       4.712 |  0.523 |  0.055 |   -0.297 |   -0.023 |   -0.096 | 0.727 | 0.329 |
-| DXDLATOT |       3.864 |  1.339 | -0.041 |   -0.380 |    0.043 |   -0.151 | 0.951 | 0.285 |
-| DXDLLTOT |      10.817 |  4.168 |  0.005 |    0.599 |   -0.440 |   -0.931 | 0.942 | 0.769 |
-| DXDTRTOT |      30.776 |  7.718 |  0.092 |   -0.148 |    0.823 |    2.325 | 0.981 | 1.467 |
-| DXDTOBMC |       2.161 |  0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
-| DXDTOBMD |       1.088 |  0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
-| DXDHEPF  |      23.903 | -0.188 | -0.220 |   -0.320 |   -0.187 |    0.522 | 0.387 | 0.429 |
-| DXDLAPF  |      24.764 | -0.848 | -4.477 |   11.947 |   -0.698 |    7.712 | 0.694 | 5.882 |
-| DXDLLPF  |      27.914 |  0.061 | -3.772 |   11.347 |   -1.225 |    5.054 | 0.639 | 5.674 |
-| DXDTRPF  |      23.995 | -0.529 | -3.768 |    7.002 |    0.013 |    8.657 | 0.799 | 3.982 |
-| DXDTOPF  |      25.497 | -0.063 | -3.691 |    8.571 |   -0.518 |    6.559 | 0.750 | 4.074 |
+|          | (Intercept) | BMXWT |  BMXHT | RIAGENDR | RIDAGEEX | BMXWAIST |    R2 |  RMSE |
+|:---------|------------:|------:|-------:|---------:|---------:|---------:|------:|------:|
+| DXXHEFAT |       1.126 | 0.117 |  0.002 |   -0.084 |   -0.012 |    0.000 | 0.732 | 0.080 |
+| DXXLAFAT |       0.949 | 0.395 | -0.211 |    0.344 |   -0.012 |    0.231 | 0.823 | 0.230 |
+| DXXLLFAT |       2.986 | 1.520 | -0.498 |    1.521 |   -0.284 |    0.196 | 0.717 | 0.841 |
+| DXXTRFAT |       7.855 | 2.372 | -1.568 |    2.016 |    0.272 |    3.207 | 0.912 | 1.470 |
+| DXDTOFAT |      16.896 | 6.420 | -3.017 |    5.703 |   -0.337 |    4.028 | 0.892 | 2.893 |
+| DXDHETOT |       4.712 | 0.523 |  0.055 |   -0.297 |   -0.023 |   -0.096 | 0.727 | 0.329 |
+| DXDLATOT |       3.864 | 1.339 | -0.041 |   -0.380 |    0.043 |   -0.151 | 0.951 | 0.285 |
+| DXDLLTOT |      10.817 | 4.168 |  0.005 |    0.599 |   -0.440 |   -0.931 | 0.942 | 0.769 |
+| DXDTRTOT |      30.776 | 7.718 |  0.092 |   -0.148 |    0.823 |    2.325 | 0.981 | 1.467 |
+| DXDTOBMC |       2.161 | 0.542 |  0.263 |   -0.036 |    0.058 |   -0.306 | 0.839 | 0.249 |
+| DXDTOBMD |       1.088 | 0.117 |  0.060 |    0.015 |    0.019 |   -0.072 | 0.627 | 0.095 |
 
 Lasso regression model based on only five easily-measurable independent
 variables
@@ -297,56 +274,41 @@ variables
 
 The following formulas were generated based on lasso regression analysis
 and can be used to provide rougher estimation of body parts fat and
-total mass as well as percentage of mass. Independent variables should
-be used in original, non-normalized, form.
+total mass. Independent variables should be used in original,
+non-normalized, form.
 
-DXXHEFAT = (0.117) × BMXWT + (0.002) × BMXHT + (-0.084) × RIAGENDR +
-(-0.012) × RIDAGEEX + (0.000)
+DXXHEFAT = (0.006) × BMXWT + (0.000) × BMXHT + (-0.084) × RIAGENDR +
+(-0.001) × RIDAGEEX + (0.732)
 
-DXXLAFAT = (0.395) × BMXWT + (-0.211) × BMXHT + (0.344) × RIAGENDR +
-(-0.012) × RIDAGEEX + (0.231) × BMXWAIST + (0.231)
+DXXLAFAT = (0.020) × BMXWT + (-0.015) × BMXHT + (0.344) × RIAGENDR +
+(-0.001) × RIDAGEEX + (0.016) × BMXWAIST + (0.852)
 
-DXXLLFAT = (1.520) × BMXWT + (-0.498) × BMXHT + (1.521) × RIAGENDR +
-(-0.284) × RIDAGEEX + (0.196) × BMXWAIST + (0.196)
+DXXLLFAT = (0.079) × BMXWT + (-0.036) × BMXHT + (1.521) × RIAGENDR +
+(-0.016) × RIDAGEEX + (0.013) × BMXWAIST + (3.164)
 
-DXXTRFAT = (2.372) × BMXWT + (-1.568) × BMXHT + (2.016) × RIAGENDR +
-(0.272) × RIDAGEEX + (3.207) × BMXWAIST + (3.207)
+DXXTRFAT = (0.123) × BMXWT + (-0.114) × BMXHT + (2.016) × RIAGENDR +
+(0.016) × RIDAGEEX + (0.216) × BMXWAIST + (0.150)
 
-DXDTOFAT = (6.420) × BMXWT + (-3.017) × BMXHT + (5.703) × RIAGENDR +
-(-0.337) × RIDAGEEX + (4.028) × BMXWAIST + (4.028)
+DXDTOFAT = (0.332) × BMXWT + (-0.219) × BMXHT + (5.703) × RIAGENDR +
+(-0.020) × RIDAGEEX + (0.271) × BMXWAIST + (9.227)
 
-DXDHETOT = (0.523) × BMXWT + (0.055) × BMXHT + (-0.297) × RIAGENDR +
-(-0.023) × RIDAGEEX + (-0.096) × BMXWAIST + (-0.096)
+DXDHETOT = (0.027) × BMXWT + (0.004) × BMXHT + (-0.297) × RIAGENDR +
+(-0.001) × RIDAGEEX + (-0.006) × BMXWAIST + (2.879)
 
-DXDLATOT = (1.339) × BMXWT + (-0.041) × BMXHT + (-0.380) × RIAGENDR +
-(0.043) × RIDAGEEX + (-0.151) × BMXWAIST + (-0.151)
+DXDLATOT = (0.069) × BMXWT + (-0.003) × BMXHT + (-0.380) × RIAGENDR +
+(0.002) × RIDAGEEX + (-0.010) × BMXWAIST + (0.657)
 
-DXDLLTOT = (4.168) × BMXWT + (0.005) × BMXHT + (0.599) × RIAGENDR +
-(-0.440) × RIDAGEEX + (-0.931) × BMXWAIST + (-0.931)
+DXDLLTOT = (0.216) × BMXWT + (0.000) × BMXHT + (0.599) × RIAGENDR +
+(-0.025) × RIDAGEEX + (-0.063) × BMXWAIST + (2.737)
 
-DXDTRTOT = (7.718) × BMXWT + (0.092) × BMXHT + (-0.148) × RIAGENDR +
-(0.823) × RIDAGEEX + (2.325) × BMXWAIST + (2.325)
+DXDTRTOT = (0.399) × BMXWT + (0.007) × BMXHT + (-0.148) × RIAGENDR +
+(0.048) × RIDAGEEX + (0.157) × BMXWAIST + (-10.401)
 
-DXDTOBMC = (0.542) × BMXWT + (0.263) × BMXHT + (-0.036) × RIAGENDR +
-(0.058) × RIDAGEEX + (-0.306) × BMXWAIST + (-0.306)
+DXDTOBMC = (0.028) × BMXWT + (0.019) × BMXHT + (-0.036) × RIAGENDR +
+(0.003) × RIDAGEEX + (-0.021) × BMXWAIST + (-1.147)
 
-DXDTOBMD = (0.117) × BMXWT + (0.060) × BMXHT + (0.015) × RIAGENDR +
-(0.019) × RIDAGEEX + (-0.072) × BMXWAIST + (-0.072)
-
-DXDHEPF = (-0.188) × BMXWT + (-0.220) × BMXHT + (-0.320) × RIAGENDR +
-(-0.187) × RIDAGEEX + (0.522) × BMXWAIST + (0.522)
-
-DXDLAPF = (-0.848) × BMXWT + (-4.477) × BMXHT + (11.947) × RIAGENDR +
-(-0.698) × RIDAGEEX + (7.712) × BMXWAIST + (7.712)
-
-DXDLLPF = (0.061) × BMXWT + (-3.772) × BMXHT + (11.347) × RIAGENDR +
-(-1.225) × RIDAGEEX + (5.054) × BMXWAIST + (5.054)
-
-DXDTRPF = (-0.529) × BMXWT + (-3.768) × BMXHT + (7.002) × RIAGENDR +
-(0.013) × RIDAGEEX + (8.657) × BMXWAIST + (8.657)
-
-DXDTOPF = (-0.063) × BMXWT + (-3.691) × BMXHT + (8.571) × RIAGENDR +
-(-0.518) × RIDAGEEX + (6.559) × BMXWAIST + (6.559)
+DXDTOBMD = (0.006) × BMXWT + (0.004) × BMXHT + (0.015) × RIAGENDR +
+(0.001) × RIDAGEEX + (-0.005) × BMXWAIST + (0.359)
 
 # References
 
