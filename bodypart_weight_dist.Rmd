@@ -1,0 +1,85 @@
+---
+author: amhoesk
+date: '`r format(Sys.Date())`'
+title: Body weight distribution
+output:
+    html_document:
+        toc: true
+        toc_float: false
+        theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r loading data exploring, echo=FALSE}
+source("get_data.r")
+source("clean_data.r")
+source("prepare_data.r")
+source("define_models.r")
+```
+
+## Selecting dependent and independent variables
+
+```{r cars}
+vars_dep_sel <- c("DXDHETOT", "DXDLATOT", "DXDLLTOT", "DXDTRTOT")
+df_dep_sel <- df_join[vars_dep_sel] / df_join[["BMXWT"]]
+
+vars_indep_sel <- c("BMXWT", "BMXHT", "RIDAGEEX")
+df_indep_sel <- df_join[vars_indep_sel]
+df_indep_sel <- df_indep_sel |> mutate(BMI = BMXWT / (BMXHT/100)^2)
+
+df_sel = cbind(df_indep_sel, df_dep_sel)
+df_sel <- unique(df_sel)
+df_sel <- df_sel |> filter(BMI < 40, RIDAGEEX > 18)
+```
+
+## Trunk weight to total body weight ratio versus BMI
+
+```{r pressure, echo=FALSE}
+library("zoo") # used for moving average and std
+
+df_plot <- df_sel[order(df_sel$BMI), ]
+df_plot <- df_plot |> 
+    mutate(avg_BMI      = rollapply(df_plot$BMI     , width=100, FUN=mean, fill="extend", align="r")) |>
+    mutate(avg_DXDTRTOT = rollapply(df_plot$DXDTRTOT, width=100, FUN=mean, fill="extend", align="r")) |>
+    mutate(sd_DXDTRTOT  = rollapply(df_plot$DXDTRTOT, width=100, FUN=sd  , fill="extend", align="r"))
+
+plt <- ggplot(data = df_plot, mapping = aes(x = avg_BMI, y = avg_DXDTRTOT)) +
+    geom_point(mapping = aes(x = BMI, y = DXDTRTOT), 
+               alpha = 0.4, size=1, stroke=NA
+    ) +
+    geom_ribbon(
+      aes(ymin = avg_DXDTRTOT-sd_DXDTRTOT, ymax = avg_DXDTRTOT+sd_DXDTRTOT), 
+      alpha = 0.5, fill='red'
+    ) +
+    geom_line(
+      aes(x = avg_BMI, y = avg_DXDTRTOT + 3 * sd_DXDTRTOT),
+      linetype="dashed", color="red" 
+    ) +
+    geom_line(
+      aes(x = avg_BMI, y = avg_DXDTRTOT - 3 * sd_DXDTRTOT),
+      linetype="dashed", color="red" 
+    ) +
+    geom_line(size=2, linetype="solid") +
+    labs(x = expression(paste("Body Math Index ", (kg/m^2))), y = "Trunk Weight to Total Body Weight (-)")
+
+# svg("output.svg", width = 10/2.54, height = 8/2.54)
+print(plt)
+# dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

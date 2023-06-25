@@ -1,5 +1,5 @@
 # Simple formulas
-The following formulas were generated based on lasso regression analysis and can be used to provide rougher estimation of body parts fat and total mass. Independent variables should be used in original, non-normalized, form.
+The following formulas were generated based on lasso regression analysis and can be used to provide a rough estimation of body parts fat and total mass. Independent variables should be used in original, non-normalized, form.
 
 ```{r, results='asis'}
 df_vars_scale_summary <- describe(df_join[,vars_scale])
